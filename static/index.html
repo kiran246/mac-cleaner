@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mac Cleaner</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">
+    <span class="logo-icon">🧹</span>
+    <span class="logo-text">Mac Cleaner</span>
+  </div>
+  <nav>
+    <button class="nav-btn active" data-tab="cache">
+      <span class="nav-icon">🗑️</span> Cache &amp; Logs
+    </button>
+    <button class="nav-btn" data-tab="large">
+      <span class="nav-icon">📦</span> Large Files
+    </button>
+    <button class="nav-btn" data-tab="dupes">
+      <span class="nav-icon">♊</span> Duplicates
+    </button>
+    <button class="nav-btn" data-tab="disk">
+      <span class="nav-icon">💿</span> Disk Map
+    </button>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <!-- Cache & Logs -->
+  <div id="tab-cache" class="tab active">
+    <div class="tab-header">
+      <div>
+        <h1>Cache &amp; Logs</h1>
+        <p class="subtitle">System caches and log files that are safe to remove</p>
+      </div>
+      <button class="btn btn-primary" id="scan-cache">Scan</button>
+    </div>
+    <div id="cache-summary" class="summary hidden"></div>
+    <div id="cache-results"></div>
+    <div class="actions hidden" id="cache-actions">
+      <button class="btn btn-danger" id="delete-cache">Move Selected to Trash</button>
+      <span class="selected-size" id="cache-selected-size"></span>
+    </div>
+  </div>
+
+  <!-- Large Files -->
+  <div id="tab-large" class="tab">
+    <div class="tab-header">
+      <div>
+        <h1>Large Files</h1>
+        <p class="subtitle">Files consuming the most disk space in your home folder</p>
+      </div>
+      <div class="controls">
+        <label>Min size <input type="number" id="min-mb" value="100" min="1" max="50000"> MB</label>
+        <label>Not accessed in <input type="number" id="days-old" value="0" min="0"> days (0 = any)</label>
+        <button class="btn btn-primary" id="scan-large">Scan</button>
+      </div>
+    </div>
+    <div id="large-summary" class="summary hidden"></div>
+    <div id="large-results"></div>
+    <div class="actions hidden" id="large-actions">
+      <button class="btn btn-danger" id="delete-large">Move Selected to Trash</button>
+      <span class="selected-size" id="large-selected-size"></span>
+    </div>
+  </div>
+
+  <!-- Duplicates -->
+  <div id="tab-dupes" class="tab">
+    <div class="tab-header">
+      <div>
+        <h1>Duplicate Files</h1>
+        <p class="subtitle">Identical files wasting space (matched by content hash)</p>
+      </div>
+      <div class="controls">
+        <label>Path <input type="text" id="dupe-path" value="~/Downloads"></label>
+        <button class="btn btn-primary" id="scan-dupes">Scan</button>
+      </div>
+    </div>
+    <div id="dupes-summary" class="summary hidden"></div>
+    <div id="dupes-results"></div>
+    <div class="actions hidden" id="dupes-actions">
+      <button class="btn btn-danger" id="delete-dupes">Move Selected to Trash</button>
+      <span class="selected-size" id="dupes-selected-size"></span>
+    </div>
+  </div>
+
+  <!-- Disk Map -->
+  <div id="tab-disk" class="tab">
+    <div class="tab-header">
+      <div>
+        <h1>Disk Map</h1>
+        <p class="subtitle">Visual breakdown of what's using your disk space</p>
+      </div>
+      <div class="controls">
+        <label>Path <input type="text" id="disk-path" value="~"></label>
+        <label>Depth <input type="number" id="disk-depth" value="2" min="1" max="4"></label>
+        <button class="btn btn-primary" id="scan-disk">Scan</button>
+      </div>
+    </div>
+    <div id="disk-chart" class="chart-container"></div>
+  </div>
+
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

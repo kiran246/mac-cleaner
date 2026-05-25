@@ -1,0 +1,4 @@
+fastapi
+uvicorn[standard]
+humanize
+send2trash
