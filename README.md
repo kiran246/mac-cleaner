@@ -4,6 +4,24 @@ A lightweight, local-first Mac disk cleaning tool built with Python and a browse
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-latest-green) ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
+## Quick Install
+
+Open **Terminal** (press `⌘ Space`, type `Terminal`, hit Enter) and paste:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kiran246/mac-cleaner/main/install.sh | bash
+```
+
+The script installs everything automatically (Homebrew, Python, dependencies) and creates a **Mac Cleaner** launcher on your Desktop. When it finishes, **double-click that file** to start the app — your browser will open automatically.
+
+> **First-run note:** macOS may show a security prompt the very first time you double-click the launcher. Click **Open** to proceed.
+
+### Updating later
+
+To get the latest version, just run the same `curl` command again. It updates in place.
+
+---
+
 ## Features
 
 Organized into five sections, accessible from the sidebar:
@@ -48,31 +66,26 @@ Organized into five sections, accessible from the sidebar:
 
 All deletions move files to the macOS **Trash** (via `send2trash`) — nothing is permanently deleted until you empty the Trash.
 
-## Requirements
+## Manual Setup (developers)
 
-- macOS (tested on macOS 14+)
-- Python 3.9+
-
-## Setup
+If you prefer to set up manually:
 
 ```bash
 git clone https://github.com/kiran246/mac-cleaner.git
 cd mac-cleaner
-pip3 install -r requirements.txt
-```
-
-**Optional:** install `imagehash` for higher-quality perceptual photo comparison:
-```bash
-pip3 install imagehash
-```
-
-## Running
-
-```bash
-python3 -m uvicorn main:app --host 127.0.0.1 --port 8765
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8765
 ```
 
 Then open **http://127.0.0.1:8765** in your browser.
+
+**Optional:** install `imagehash` for higher-quality perceptual photo comparison:
+```bash
+.venv/bin/pip install imagehash
+```
+
+**Requirements:** macOS 14+, Python 3.9+
 
 ## Project Structure
 
