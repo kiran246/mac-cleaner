@@ -2,3 +2,5 @@ fastapi
 uvicorn[standard]
 humanize
 send2trash
+Pillow
+# imagehash  # optional: enables perceptual hash for similar photos (pip3 install imagehash)

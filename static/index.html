@@ -14,51 +14,146 @@
     <span class="logo-icon">🧹</span>
     <span class="logo-text">Mac Cleaner</span>
   </div>
-  <nav>
-    <button class="nav-btn active" data-tab="cache">
-      <span class="nav-icon">🗑️</span> Cache &amp; Logs
-    </button>
-    <button class="nav-btn" data-tab="large">
-      <span class="nav-icon">📦</span> Large Files
-    </button>
-    <button class="nav-btn" data-tab="dupes">
-      <span class="nav-icon">♊</span> Duplicates
-    </button>
-    <button class="nav-btn" data-tab="disk">
-      <span class="nav-icon">💿</span> Disk Map
-    </button>
+  <nav class="sidebar-nav">
+
+    <div class="nav-section-label">CLEAN SPACE</div>
+    <button class="nav-btn active" data-tab="cache"><span class="nav-icon">🗑️</span>System Junk</button>
+    <button class="nav-btn" data-tab="screenshots"><span class="nav-icon">📸</span>Screenshots</button>
+    <button class="nav-btn" data-tab="mail"><span class="nav-icon">✉️</span>Mail</button>
+    <button class="nav-btn" data-tab="ios"><span class="nav-icon">📱</span>iOS Backups</button>
+    <button class="nav-btn" data-tab="xcode"><span class="nav-icon">🔨</span>Developer</button>
+    <button class="nav-btn" data-tab="browser"><span class="nav-icon">🌐</span>Browser Cache</button>
+    <button class="nav-btn" data-tab="trash"><span class="nav-icon">🗂️</span>Trash &amp; Archives</button>
+    <button class="nav-btn" data-tab="large"><span class="nav-icon">📦</span>Large Files</button>
+
+    <div class="nav-section-label">PERFORMANCE</div>
+    <button class="nav-btn" data-tab="login"><span class="nav-icon">🚀</span>Login Items</button>
+    <button class="nav-btn" data-tab="processes"><span class="nav-icon">📊</span>Processes</button>
+    <button class="nav-btn" data-tab="maintenance"><span class="nav-icon">🔧</span>Maintenance</button>
+
+    <div class="nav-section-label">PRIVACY</div>
+    <button class="nav-btn" data-tab="privacy"><span class="nav-icon">🔒</span>Privacy Cleaner</button>
+    <button class="nav-btn" data-tab="network"><span class="nav-icon">🌍</span>Network Monitor</button>
+
+    <div class="nav-section-label">DECLUTTER</div>
+    <button class="nav-btn" data-tab="dupes"><span class="nav-icon">♊</span>Duplicates</button>
+    <button class="nav-btn" data-tab="photos"><span class="nav-icon">🖼️</span>Similar Photos</button>
+    <button class="nav-btn" data-tab="apps"><span class="nav-icon">📋</span>App Manager</button>
+    <button class="nav-btn" data-tab="symlinks"><span class="nav-icon">🔗</span>Broken Links</button>
+
+    <div class="nav-section-label">VISUALIZE</div>
+    <button class="nav-btn" data-tab="disk"><span class="nav-icon">💿</span>Disk Map</button>
+
   </nav>
 </aside>
 
 <main class="main">
 
-  <!-- Cache & Logs -->
+  <!-- ── System Junk ── -->
   <div id="tab-cache" class="tab active">
     <div class="tab-header">
-      <div>
-        <h1>Cache &amp; Logs</h1>
-        <p class="subtitle">System caches and log files that are safe to remove</p>
-      </div>
+      <div><h1>System Junk</h1><p class="subtitle">App caches and log files safe to remove</p></div>
       <button class="btn btn-primary" id="scan-cache">Scan</button>
     </div>
     <div id="cache-summary" class="summary hidden"></div>
     <div id="cache-results"></div>
     <div class="actions hidden" id="cache-actions">
       <button class="btn btn-danger" id="delete-cache">Move Selected to Trash</button>
-      <span class="selected-size" id="cache-selected-size"></span>
+      <span class="selected-size" id="cache-sel"></span>
     </div>
   </div>
 
-  <!-- Large Files -->
+  <!-- ── Screenshots ── -->
+  <div id="tab-screenshots" class="tab">
+    <div class="tab-header">
+      <div><h1>Screenshots</h1><p class="subtitle">Screenshots on Desktop and in Pictures/Screenshots</p></div>
+      <button class="btn btn-primary" id="scan-screenshots">Scan</button>
+    </div>
+    <div id="screenshots-summary" class="summary hidden"></div>
+    <div id="screenshots-results"></div>
+    <div class="actions hidden" id="screenshots-actions">
+      <button class="btn btn-danger" id="delete-screenshots">Move Selected to Trash</button>
+      <span class="selected-size" id="screenshots-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Mail ── -->
+  <div id="tab-mail" class="tab">
+    <div class="tab-header">
+      <div><h1>Mail</h1><p class="subtitle">Cached mail attachments and mail app data</p></div>
+      <button class="btn btn-primary" id="scan-mail">Scan</button>
+    </div>
+    <div id="mail-summary" class="summary hidden"></div>
+    <div id="mail-results"></div>
+    <div class="actions hidden" id="mail-actions">
+      <button class="btn btn-danger" id="delete-mail">Move Selected to Trash</button>
+      <span class="selected-size" id="mail-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── iOS Backups ── -->
+  <div id="tab-ios" class="tab">
+    <div class="tab-header">
+      <div><h1>iOS Backups</h1><p class="subtitle">iPhone/iPad backups stored by Finder or iTunes</p></div>
+      <button class="btn btn-primary" id="scan-ios">Scan</button>
+    </div>
+    <div id="ios-summary" class="summary hidden"></div>
+    <div id="ios-results"></div>
+    <div class="actions hidden" id="ios-actions">
+      <button class="btn btn-danger" id="delete-ios">Move Selected to Trash</button>
+      <span class="selected-size" id="ios-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Developer ── -->
+  <div id="tab-xcode" class="tab">
+    <div class="tab-header">
+      <div><h1>Developer Junk</h1><p class="subtitle">Xcode build artifacts, simulators, and device support files</p></div>
+      <button class="btn btn-primary" id="scan-xcode">Scan</button>
+    </div>
+    <div id="xcode-summary" class="summary hidden"></div>
+    <div id="xcode-results"></div>
+    <div class="actions hidden" id="xcode-actions">
+      <button class="btn btn-danger" id="delete-xcode">Move Selected to Trash</button>
+      <span class="selected-size" id="xcode-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Browser Cache ── -->
+  <div id="tab-browser" class="tab">
+    <div class="tab-header">
+      <div><h1>Browser Cache</h1><p class="subtitle">Cached data from Chrome, Safari, Firefox and other browsers</p></div>
+      <button class="btn btn-primary" id="scan-browser">Scan</button>
+    </div>
+    <div id="browser-summary" class="summary hidden"></div>
+    <div id="browser-results"></div>
+    <div class="actions hidden" id="browser-actions">
+      <button class="btn btn-danger" id="delete-browser">Move Selected to Trash</button>
+      <span class="selected-size" id="browser-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Trash & Archives ── -->
+  <div id="tab-trash" class="tab">
+    <div class="tab-header">
+      <div><h1>Trash &amp; Archives</h1><p class="subtitle">Items in Trash and old DMG/ZIP files in Downloads</p></div>
+      <button class="btn btn-primary" id="scan-trash">Scan</button>
+    </div>
+    <div id="trash-summary" class="summary hidden"></div>
+    <div id="trash-results"></div>
+    <div class="actions hidden" id="trash-actions">
+      <button class="btn btn-danger" id="delete-trash">Move Selected to Trash</button>
+      <span class="selected-size" id="trash-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Large Files ── -->
   <div id="tab-large" class="tab">
     <div class="tab-header">
-      <div>
-        <h1>Large Files</h1>
-        <p class="subtitle">Files consuming the most disk space in your home folder</p>
-      </div>
+      <div><h1>Large Files</h1><p class="subtitle">Files consuming the most space in your home folder</p></div>
       <div class="controls">
         <label>Min size <input type="number" id="min-mb" value="100" min="1" max="50000"> MB</label>
-        <label>Not accessed in <input type="number" id="days-old" value="0" min="0"> days (0 = any)</label>
+        <label>Not accessed in <input type="number" id="days-old" value="0" min="0"> days</label>
         <button class="btn btn-primary" id="scan-large">Scan</button>
       </div>
     </div>
@@ -66,17 +161,101 @@
     <div id="large-results"></div>
     <div class="actions hidden" id="large-actions">
       <button class="btn btn-danger" id="delete-large">Move Selected to Trash</button>
-      <span class="selected-size" id="large-selected-size"></span>
+      <span class="selected-size" id="large-sel"></span>
     </div>
   </div>
 
-  <!-- Duplicates -->
+  <!-- ── Login Items ── -->
+  <div id="tab-login" class="tab">
+    <div class="tab-header">
+      <div><h1>Login Items</h1><p class="subtitle">Apps and agents that launch at startup</p></div>
+      <button class="btn btn-primary" id="scan-login">Scan</button>
+    </div>
+    <div id="login-summary" class="summary hidden"></div>
+    <div id="login-results"></div>
+    <div class="actions hidden" id="login-actions">
+      <button class="btn btn-danger" id="delete-login">Remove Selected Agents</button>
+      <span class="selected-size" id="login-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Processes ── -->
+  <div id="tab-processes" class="tab">
+    <div class="tab-header">
+      <div><h1>Processes</h1><p class="subtitle">Running processes sorted by resource usage</p></div>
+      <div class="controls">
+        <button class="btn btn-sm sort-btn active" data-sort="cpu" id="sort-cpu">By CPU</button>
+        <button class="btn btn-sm sort-btn" data-sort="mem" id="sort-mem">By RAM</button>
+        <button class="btn btn-primary" id="refresh-processes">Refresh</button>
+      </div>
+    </div>
+    <div id="mem-gauge" class="mem-gauge hidden"></div>
+    <div id="processes-results"></div>
+  </div>
+
+  <!-- ── Maintenance ── -->
+  <div id="tab-maintenance" class="tab">
+    <div class="tab-header">
+      <div><h1>Maintenance</h1><p class="subtitle">System upkeep tasks — some require your password</p></div>
+    </div>
+    <div class="maint-grid">
+      <div class="maint-card">
+        <div class="maint-card-icon">🔧</div>
+        <div class="maint-card-body">
+          <div class="maint-card-title">Run Maintenance Scripts</div>
+          <div class="maint-card-desc">Runs macOS's built-in daily, weekly, and monthly cleanup routines. Rotates logs, purges temp files, and more.</div>
+        </div>
+        <button class="btn btn-primary" data-script="daily" onclick="runMaint(this,'daily')">Run Scripts</button>
+        <div class="maint-status" id="maint-daily"></div>
+      </div>
+      <div class="maint-card">
+        <div class="maint-card-icon">💾</div>
+        <div class="maint-card-body">
+          <div class="maint-card-title">Free Memory</div>
+          <div class="maint-card-desc">Purges inactive memory pages, freeing up RAM for foreground apps. Requires administrator password.</div>
+        </div>
+        <button class="btn btn-primary" onclick="runMaint(this,'purge')">Free Memory</button>
+        <div class="maint-status" id="maint-purge"></div>
+      </div>
+      <div class="maint-card">
+        <div class="maint-card-icon">🌐</div>
+        <div class="maint-card-body">
+          <div class="maint-card-title">Flush DNS Cache</div>
+          <div class="maint-card-desc">Clears the DNS resolver cache. Useful after changing DNS servers or if sites aren't loading correctly.</div>
+        </div>
+        <button class="btn btn-primary" onclick="runMaint(this,'dns')">Flush DNS</button>
+        <div class="maint-status" id="maint-dns"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Privacy ── -->
+  <div id="tab-privacy" class="tab">
+    <div class="tab-header">
+      <div><h1>Privacy Cleaner</h1><p class="subtitle">Browser history, cookies, and recent activity records</p></div>
+      <button class="btn btn-primary" id="scan-privacy">Scan</button>
+    </div>
+    <div id="privacy-summary" class="summary hidden"></div>
+    <div id="privacy-results"></div>
+    <div class="actions hidden" id="privacy-actions">
+      <button class="btn btn-danger" id="delete-privacy">Clear Selected</button>
+      <span class="selected-size" id="privacy-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Network Monitor ── -->
+  <div id="tab-network" class="tab">
+    <div class="tab-header">
+      <div><h1>Network Monitor</h1><p class="subtitle">Active connections grouped by process</p></div>
+      <button class="btn btn-primary" id="refresh-network">Refresh</button>
+    </div>
+    <div id="network-results"></div>
+  </div>
+
+  <!-- ── Duplicates ── -->
   <div id="tab-dupes" class="tab">
     <div class="tab-header">
-      <div>
-        <h1>Duplicate Files</h1>
-        <p class="subtitle">Identical files wasting space (matched by content hash)</p>
-      </div>
+      <div><h1>Duplicate Files</h1><p class="subtitle">Identical files matched by content hash</p></div>
       <div class="controls">
         <label>Path <input type="text" id="dupe-path" value="~/Downloads"></label>
         <button class="btn btn-primary" id="scan-dupes">Scan</button>
@@ -86,17 +265,67 @@
     <div id="dupes-results"></div>
     <div class="actions hidden" id="dupes-actions">
       <button class="btn btn-danger" id="delete-dupes">Move Selected to Trash</button>
-      <span class="selected-size" id="dupes-selected-size"></span>
+      <span class="selected-size" id="dupes-sel"></span>
     </div>
   </div>
 
-  <!-- Disk Map -->
+  <!-- ── Similar Photos ── -->
+  <div id="tab-photos" class="tab">
+    <div class="tab-header">
+      <div><h1>Similar Photos</h1><p class="subtitle">Near-duplicate images grouped by perceptual hash</p></div>
+      <div class="controls">
+        <label>Path <input type="text" id="photos-path" value="~/Pictures"></label>
+        <label>Sensitivity <input type="number" id="photos-threshold" value="10" min="1" max="20"></label>
+        <button class="btn btn-primary" id="scan-photos">Scan</button>
+      </div>
+    </div>
+    <div id="photos-summary" class="summary hidden"></div>
+    <div id="photos-results"></div>
+    <div class="actions hidden" id="photos-actions">
+      <button class="btn btn-danger" id="delete-photos">Move Selected to Trash</button>
+      <span class="selected-size" id="photos-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── App Manager ── -->
+  <div id="tab-apps" class="tab">
+    <div class="tab-header">
+      <div><h1>App Manager</h1><p class="subtitle">All installed apps — find leftovers and uninstall cleanly</p></div>
+      <button class="btn btn-primary" id="scan-apps">Scan</button>
+    </div>
+    <div id="apps-summary" class="summary hidden"></div>
+    <div id="apps-results"></div>
+  </div>
+
+  <!-- ── Broken Links ── -->
+  <div id="tab-symlinks" class="tab">
+    <div class="tab-header">
+      <div><h1>Broken Links &amp; Empty Folders</h1><p class="subtitle">Dead symlinks and empty directories cluttering your home folder</p></div>
+      <div class="controls">
+        <button class="btn btn-primary" id="scan-symlinks">Scan Broken Links</button>
+        <button class="btn btn-primary" id="scan-empty">Scan Empty Folders</button>
+      </div>
+    </div>
+    <div class="section-label">BROKEN SYMLINKS</div>
+    <div id="symlinks-summary" class="summary hidden"></div>
+    <div id="symlinks-results"></div>
+    <div class="actions hidden" id="symlinks-actions">
+      <button class="btn btn-danger" id="delete-symlinks">Delete Selected Links</button>
+      <span class="selected-size" id="symlinks-sel"></span>
+    </div>
+    <div class="section-label" style="margin-top:24px">EMPTY FOLDERS</div>
+    <div id="empty-summary" class="summary hidden"></div>
+    <div id="empty-results"></div>
+    <div class="actions hidden" id="empty-actions">
+      <button class="btn btn-danger" id="delete-empty">Delete Selected Folders</button>
+      <span class="selected-size" id="empty-sel"></span>
+    </div>
+  </div>
+
+  <!-- ── Disk Map ── -->
   <div id="tab-disk" class="tab">
     <div class="tab-header">
-      <div>
-        <h1>Disk Map</h1>
-        <p class="subtitle">Visual breakdown of disk usage — click any folder to explore its contents</p>
-      </div>
+      <div><h1>Disk Map</h1><p class="subtitle">Visual breakdown of disk usage — click any folder to explore</p></div>
       <div class="controls">
         <label>Path <input type="text" id="disk-path" value="~"></label>
         <label>Depth <input type="number" id="disk-depth" value="2" min="1" max="4"></label>
