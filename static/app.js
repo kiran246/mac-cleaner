@@ -40,7 +40,11 @@ const api = {
 };
 
 function loading(msg = 'Scanning…') {
-  return `<div class="loading"><div class="spinner"></div>${esc(msg)}</div>`;
+  return `<div class="loading"><div class="spinner"></div><span>${esc(msg)}</span></div>`;
+}
+
+function emptyState(icon, msg, sub) {
+  return `<div class="empty"><div class="empty-icon">${icon}</div><strong>${esc(msg)}</strong>${sub ? `<p>${esc(sub)}</p>` : ''}</div>`;
 }
 
 // ── Tab navigation ─────────────────────────────────────────────────
@@ -108,7 +112,7 @@ function renderFileList(containerId, items, actionsId, sizeId, extraMeta) {
   const actions   = document.getElementById(actionsId);
 
   if (!items || !items.length) {
-    container.innerHTML = '<div class="empty">Nothing found here — you\'re clean!</div>';
+    container.innerHTML = emptyState('✅', 'Nothing found', 'You\'re clean here!');
     if (actions) actions.classList.add('hidden');
     return;
   }
@@ -153,8 +157,8 @@ function renderFileList(containerId, items, actionsId, sizeId, extraMeta) {
 function showSummary(id, count, total_human, extra) {
   const el = document.getElementById(id);
   let html = `
-    <div><div class="stat-label">Items</div><div class="stat-value">${count}</div></div>
-    <div><div class="stat-label">Total size</div><div class="stat-value">${esc(total_human)}</div></div>`;
+    <div class="stat-block"><div class="stat-label">Items found</div><div class="stat-value accent">${count}</div></div>
+    <div class="stat-block"><div class="stat-label">Total size</div><div class="stat-value">${esc(total_human)}</div></div>`;
   if (extra) html += extra;
   el.innerHTML = html;
   el.classList.remove('hidden');
