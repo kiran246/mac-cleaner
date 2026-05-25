@@ -95,7 +95,7 @@
     <div class="tab-header">
       <div>
         <h1>Disk Map</h1>
-        <p class="subtitle">Visual breakdown of what's using your disk space</p>
+        <p class="subtitle">Visual breakdown of disk usage — click any folder to explore its contents</p>
       </div>
       <div class="controls">
         <label>Path <input type="text" id="disk-path" value="~"></label>
@@ -103,7 +103,17 @@
         <button class="btn btn-primary" id="scan-disk">Scan</button>
       </div>
     </div>
-    <div id="disk-chart" class="chart-container"></div>
+    <div class="disk-split">
+      <div id="disk-chart" class="chart-container"></div>
+      <div id="disk-panel" class="disk-panel hidden">
+        <div class="disk-panel-header">
+          <span class="disk-panel-title" id="disk-panel-title"></span>
+          <button class="panel-close" onclick="closePanel()">✕</button>
+        </div>
+        <div class="disk-panel-summary" id="disk-panel-summary"></div>
+        <div class="disk-panel-files" id="disk-panel-files"></div>
+      </div>
+    </div>
   </div>
 
 </main>

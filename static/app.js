@@ -290,6 +290,87 @@ let diskChart = null;
 function initDiskChart() {
   diskChart = echarts.init(document.getElementById('disk-chart'), 'dark');
   window.addEventListener('resize', () => diskChart.resize());
+
+  diskChart.on('click', params => {
+    if (params.componentType === 'series' && params.data && params.data.path) {
+      fetchFolderFiles(params.data.path);
+    }
+  });
+}
+
+function fileIcon(name, type) {
+  if (type === 'directory') return '📁';
+  const ext = name.split('.').pop().toLowerCase();
+  if (['mp4','mov','avi','mkv','m4v'].includes(ext)) return '🎬';
+  if (['jpg','jpeg','png','gif','webp','heic','svg'].includes(ext)) return '🖼️';
+  if (['mp3','aac','flac','wav','m4a'].includes(ext)) return '🎵';
+  if (['zip','tar','gz','rar','7z','dmg','pkg'].includes(ext)) return '📦';
+  if (['pdf'].includes(ext)) return '📄';
+  if (['py','js','ts','swift','go','rs','c','cpp','java','rb'].includes(ext)) return '💻';
+  return '📄';
+}
+
+async function fetchFolderFiles(path) {
+  const panel = document.getElementById('disk-panel');
+  const titleEl = document.getElementById('disk-panel-title');
+  const summaryEl = document.getElementById('disk-panel-summary');
+  const filesEl = document.getElementById('disk-panel-files');
+
+  const wasHidden = panel.classList.contains('hidden');
+  panel.classList.remove('hidden');
+  if (wasHidden) setTimeout(() => diskChart && diskChart.resize(), 10);
+
+  titleEl.textContent = path.split('/').pop() || path;
+  filesEl.innerHTML = '<div class="loading"><div class="spinner"></div>Loading…</div>';
+  summaryEl.textContent = '';
+
+  try {
+    const data = await api.get('/api/disk/files?path=' + encodeURIComponent(path));
+
+    titleEl.textContent = '📁 ' + data.name;
+    summaryEl.textContent = data.count + ' items · ' + data.total_human;
+
+    if (!data.items.length) {
+      filesEl.innerHTML = '<div class="empty">Empty folder</div>';
+      return;
+    }
+
+    const maxSize = data.items[0].size || 1;
+    let html = '';
+
+    for (const item of data.items) {
+      const pct = Math.max(2, Math.round((item.size / maxSize) * 100));
+      const isDir = item.type === 'directory';
+      const icon = fileIcon(item.name, item.type);
+      const clickAttr = isDir
+        ? `onclick="fetchFolderFiles('${item.path.replace(/'/g, "\\'")}')" `
+        : '';
+
+      html += `
+        <div class="disk-file-row ${isDir ? 'is-dir' : ''}" ${clickAttr}>
+          <div class="disk-file-meta">
+            <span class="disk-file-name">
+              <span>${icon}</span>
+              <span>${esc(item.name)}</span>
+            </span>
+            <span class="disk-file-size">${esc(item.size_human)}</span>
+          </div>
+          <div class="disk-bar-track">
+            <div class="disk-bar-fill" style="width:${pct}%"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    filesEl.innerHTML = html;
+  } catch (e) {
+    filesEl.innerHTML = `<div class="empty">Error: ${esc(e.message)}</div>`;
+  }
+}
+
+function closePanel() {
+  document.getElementById('disk-panel').classList.add('hidden');
+  setTimeout(() => diskChart && diskChart.resize(), 10);
 }
 
 function toEChartsTree(node) {

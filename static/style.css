@@ -240,14 +240,126 @@ h1 { font-size: 22px; font-weight: 600; margin-bottom: 3px; }
 .selected-size { font-size: 12px; color: var(--muted); }
 
 /* ── Disk chart ── */
-.chart-container {
-  width: 100%;
+.disk-split {
+  display: flex;
+  gap: 14px;
   height: calc(100vh - 150px);
   min-height: 400px;
+}
+
+.chart-container {
+  flex: 1;
+  min-width: 0;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
+}
+
+.disk-panel {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.disk-panel.hidden { display: none; }
+
+.disk-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  flex-shrink: 0;
+}
+
+.disk-panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.panel-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 2px 5px;
+  flex-shrink: 0;
+  line-height: 1;
+  border-radius: 4px;
+}
+.panel-close:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+.disk-panel-summary {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.disk-panel-files {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.disk-file-row {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.disk-file-row:last-child { border-bottom: none; }
+.disk-file-row:hover { background: rgba(255,255,255,0.03); }
+.disk-file-row.is-dir { cursor: pointer; }
+.disk-file-row.is-dir:hover { background: rgba(10,132,255,0.07); }
+
+.disk-file-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.disk-file-name {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.disk-file-size {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.disk-bar-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.disk-bar-fill {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
 }
 
 /* ── States ── */

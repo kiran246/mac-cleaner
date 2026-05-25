@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from scanners.cache_scanner import scan_caches
-from scanners.disk_visualizer import get_disk_usage
+from scanners.disk_visualizer import get_disk_usage, list_directory_contents
 from scanners.duplicate_finder import find_duplicates
 from scanners.large_file_finder import find_large_files
 
@@ -55,6 +55,11 @@ def api_duplicates(path: str = "~/Downloads"):
 @app.get("/api/disk/usage")
 def api_disk_usage(path: str = "~", depth: int = Query(default=2, ge=1, le=4)):
     return get_disk_usage(path, depth=depth)
+
+
+@app.get("/api/disk/files")
+def api_disk_files(path: str):
+    return list_directory_contents(path)
 
 
 if __name__ == "__main__":

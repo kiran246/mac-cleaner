@@ -7,6 +7,66 @@ import humanize
 SKIP_DIRS = {".git", ".Trash", "node_modules"}
 
 
+def _total_dir_size(path: str) -> int:
+    total = 0
+    try:
+        for dirpath, _, filenames in os.walk(path, followlinks=False):
+            for fname in filenames:
+                try:
+                    total += os.path.getsize(os.path.join(dirpath, fname))
+                except OSError:
+                    pass
+    except (PermissionError, OSError):
+        pass
+    return total
+
+
+def list_directory_contents(path: str) -> dict:
+    base = Path(path).expanduser().resolve()
+    items = []
+
+    try:
+        for entry in os.scandir(str(base)):
+            if entry.name.startswith("."):
+                continue
+            try:
+                if entry.is_symlink():
+                    continue
+                if entry.is_file():
+                    size = entry.stat().st_size
+                    items.append({
+                        "name": entry.name,
+                        "path": entry.path,
+                        "size": size,
+                        "size_human": humanize.naturalsize(size, binary=True),
+                        "type": "file",
+                    })
+                elif entry.is_dir():
+                    size = _total_dir_size(entry.path)
+                    items.append({
+                        "name": entry.name,
+                        "path": entry.path,
+                        "size": size,
+                        "size_human": humanize.naturalsize(size, binary=True),
+                        "type": "directory",
+                    })
+            except OSError:
+                pass
+    except (PermissionError, OSError):
+        pass
+
+    items.sort(key=lambda x: x["size"], reverse=True)
+    total = sum(i["size"] for i in items)
+    return {
+        "path": str(base),
+        "name": base.name or str(base),
+        "items": items[:100],
+        "count": len(items),
+        "total": total,
+        "total_human": humanize.naturalsize(total, binary=True),
+    }
+
+
 def get_disk_usage(scan_path: str, depth: int = 2) -> dict:
     base = Path(scan_path).expanduser().resolve()
 
