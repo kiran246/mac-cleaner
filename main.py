@@ -62,6 +62,15 @@ def api_disk_files(path: str):
     return list_directory_contents(path)
 
 
+@app.get("/api/reveal")
+def reveal_in_finder(path: str):
+    import subprocess
+    abs_path = os.path.abspath(os.path.expanduser(path))
+    cmd = ["open", abs_path] if os.path.isdir(abs_path) else ["open", "-R", abs_path]
+    subprocess.run(cmd, check=False)
+    return {"ok": True}
+
+
 if __name__ == "__main__":
     import uvicorn
 

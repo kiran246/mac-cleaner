@@ -346,6 +346,7 @@ async function fetchFolderFiles(path) {
         ? `onclick="fetchFolderFiles('${item.path.replace(/'/g, "\\'")}')" `
         : '';
 
+      const revealPath = item.path.replace(/'/g, "\\'");
       html += `
         <div class="disk-file-row ${isDir ? 'is-dir' : ''}" ${clickAttr}>
           <div class="disk-file-meta">
@@ -353,7 +354,12 @@ async function fetchFolderFiles(path) {
               <span>${icon}</span>
               <span>${esc(item.name)}</span>
             </span>
-            <span class="disk-file-size">${esc(item.size_human)}</span>
+            <div class="disk-file-actions">
+              <span class="disk-file-size">${esc(item.size_human)}</span>
+              <button class="reveal-btn"
+                onclick="revealInFinder('${revealPath}', event)"
+                title="${isDir ? 'Open in Finder' : 'Show in Finder'}">↗</button>
+            </div>
           </div>
           <div class="disk-bar-track">
             <div class="disk-bar-fill" style="width:${pct}%"></div>
@@ -371,6 +377,15 @@ async function fetchFolderFiles(path) {
 function closePanel() {
   document.getElementById('disk-panel').classList.add('hidden');
   setTimeout(() => diskChart && diskChart.resize(), 10);
+}
+
+async function revealInFinder(path, event) {
+  event.stopPropagation();
+  try {
+    await api.get('/api/reveal?path=' + encodeURIComponent(path));
+  } catch (e) {
+    showToast('Could not open Finder: ' + e.message, 'error');
+  }
 }
 
 function toEChartsTree(node) {

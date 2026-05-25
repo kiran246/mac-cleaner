@@ -332,6 +332,28 @@ h1 { font-size: 22px; font-weight: 600; margin-bottom: 3px; }
   gap: 6px;
 }
 
+.disk-file-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.reveal-btn {
+  display: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.reveal-btn:hover { background: rgba(255,255,255,0.15); color: var(--text); }
+.disk-file-row:hover .reveal-btn { display: inline-block; }
+
 .disk-file-name {
   font-size: 12px;
   white-space: nowrap;
