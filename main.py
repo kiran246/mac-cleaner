@@ -232,5 +232,23 @@ def api_disk_files(path: str):
 
 
 if __name__ == "__main__":
+    import signal
+    import subprocess
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8765)
+
+    PORT = 8765
+
+    # Kill any process already bound to the port
+    try:
+        result = subprocess.run(
+            ["lsof", "-ti", f":{PORT}"],
+            capture_output=True, text=True
+        )
+        pids = result.stdout.strip().split()
+        for pid in pids:
+            os.kill(int(pid), signal.SIGTERM)
+            print(f"Killed existing process {pid} on port {PORT}")
+    except Exception:
+        pass
+
+    uvicorn.run(app, host="127.0.0.1", port=PORT)
