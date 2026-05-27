@@ -75,10 +75,12 @@ git clone https://github.com/kiran246/mac-cleaner.git
 cd mac-cleaner
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8765
+.venv/bin/python main.py
 ```
 
 Then open **http://127.0.0.1:8765** in your browser.
+
+> **Restart-friendly:** `main.py` automatically kills any process already bound to port 8765 before starting, so you can re-run it without getting an "address already in use" error.
 
 **Optional:** install `imagehash` for higher-quality perceptual photo comparison:
 ```bash
